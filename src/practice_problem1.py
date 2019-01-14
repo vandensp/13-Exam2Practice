@@ -42,7 +42,7 @@ def main():
 
     #run_test_init()
     run_test_append_string()
-    # run_test_double()
+    #run_test_double()
     # run_test_shrink()
     # run_test_double_then_shrink()
     # run_test_reset()
@@ -170,11 +170,10 @@ class Box(object):
         for k in range (self.volume - len(self.contents), len(additional_contents)):
             left_over = left_over + additional_contents[k]
 
-        number_of_characters_to_append = min(self.volume - len(self.contents),
-                                             len(additional_contents))
         addition = ''
-        for k in range (number_of_characters_to_append):
-            addition = addition + additional_contents[k]
+        for k in range (self.volume - len(self.contents)):
+            if k < len(additional_contents):
+                addition = addition + additional_contents[k]
         self.contents = self.contents + addition
 
         return left_over
