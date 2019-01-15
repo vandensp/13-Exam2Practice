@@ -44,9 +44,9 @@ def main():
     #run_test_append_string()
     #run_test_double()
     #run_test_shrink()
-    run_test_double_then_shrink()
-    # run_test_reset()
-    # run_test_steal()
+    #run_test_double_then_shrink()
+    #run_test_reset()
+    run_test_steal()
     # run_test_get_history()
     # run_test_combined_box()
 
@@ -110,6 +110,8 @@ class Box(object):
         else:
             self.contents = contents
             self.volume = volume
+        self.original_volume = self.volume
+        self.original_contents = self.contents
 
 
     def append_string(self, additional_contents):
@@ -279,7 +281,6 @@ class Box(object):
 
         if new_volume <= len(old_contents):
             for k in range(new_volume):
-                print(k, old_contents[k])
                 new_contents = new_contents + old_contents[k]
         elif new_volume > len(old_contents):
             new_contents = old_contents
@@ -337,14 +338,17 @@ class Box(object):
           :type new_volume: int
         """
         # ---------------------------------------------------------------------
-        # TODO: 6. Implement and test this function.
+        # Done: 6. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
         # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-        #    DIFFICULTY:      5
+        #    DIFFICULTY:      5k
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        self.double()
+        left_over_from_double = self.left_over
+        return len(self.shrink(new_volume)) + len(left_over_from_double)
 
     def reset(self):
         """
@@ -356,7 +360,7 @@ class Box(object):
           when this Box was constructed.
         """
         # ---------------------------------------------------------------------
-        # TODO: 7. Implement and test this function.
+        #Done: 7. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -364,6 +368,8 @@ class Box(object):
         #    DIFFICULTY:      4
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
+        self.contents = self.original_contents
+        self.volume = self.original_volume
 
     def steal(self, other_box):
         """
@@ -396,6 +402,8 @@ class Box(object):
         # FOR FULL CREDIT, YOUR SOLUTION MUST BE NO MORE THAN
         #    ** TWO **   LINES OF CODE.
         #######################################################################
+        self.append_string(other_box.contents)
+        other_box.shrink(self.volume)
 
     def get_history(self):
         """
@@ -433,33 +441,6 @@ class Box(object):
         # ---------------------------------------------------------------------
         # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
         #    DIFFICULTY:      6
-        #    TIME ESTIMATE:   5 minutes.
-        # ---------------------------------------------------------------------
-
-    def combined_box(self, other_box):
-        """
-        What comes in:
-          -- self
-          -- Another Box
-        What goes out:
-          Returns a new Box whose:
-            -- Contents is the contents of this Box plus (i.e., followed by)
-                 the contents of the given other_box.
-            -- Volume is the sum of the volumes of this Box
-                 and the given other_box.
-        Side effects: None.
-        Examples:
-          See the TEST cases for examples.
-        Type hints:
-          :type other_box: Box
-        """
-        # ---------------------------------------------------------------------
-        # TODO: 10. Implement and test this function.
-        #     The testing code is already written for you (above).
-        # ---------------------------------------------------------------------
-        # ---------------------------------------------------------------------
-        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-        #    DIFFICULTY:      4
         #    TIME ESTIMATE:   5 minutes.
         # ---------------------------------------------------------------------
 
